@@ -1,0 +1,20 @@
+[Hooks] Running formatters...
+[Hooks] Skipping format_code.sh (not found or not executable)
+[Hooks] Running linters...
+[Hooks] ВНИМАНИЕ: node_modules не найден. Пропуск ESLint. Пожалуйста, запустите 'npm install'.
+[Hooks] Running security scan...
+No issues found.
+[Hooks] Pre-commit checks passed!
+[main 53a9ed4] initial commit
+ 13 files changed, 272 insertions(+), 1 deletion(-)
+ create mode 100755 .hooks/post-merge
+ create mode 100755 .hooks/pre-commit
+ create mode 100755 .hooks/pre-push
+ create mode 100644 Makefile
+ create mode 100644 prompts/feature_template.md
+ create mode 100644 scripts/format_code.sh
+ create mode 100644 scripts/security_scan.py
+ create mode 100644 scripts/validate_data.py
+ create mode 100644 skills/create_pr/manifest.json
+ create mode 100644 skills/create_pr/steps.yaml
+ create mode 100644 tests/scripts/test_validate_data.py

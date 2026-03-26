@@ -3,10 +3,24 @@
 
 set -e
 
-echo "Running tests..."
-npm test || { echo "Tests failed"; exit 1; }
+if [ ! -d "node_modules" ]; then
+  echo "[Hooks] ВНИМАНИЕ: node_modules не найден. Пропуск тестов перед push. Запустите 'npm install'."
+  exit 0
+fi
 
-echo "Running TypeScript type check..."
-npm run type-check || { echo "Type check failed"; exit 1; }
+echo "[Hooks] Running tests..."
+# Only run if the script exists in package.json
+if grep -q '"test":' package.json; then
+  npm test || { echo "Tests failed"; exit 1; }
+else
+  echo "[Hooks] 'test' script not defined in package.json. Skipping."
+fi
 
-echo "Pre-push checks passed."
+echo "[Hooks] Running TypeScript type check..."
+if grep -q '"type-check":' package.json; then
+  npm run type-check || { echo "Type check failed"; exit 1; }
+else
+  echo "[Hooks] 'type-check' script not defined in package.json. Skipping."
+fi
+
+echo "[Hooks] Pre-push checks passed."

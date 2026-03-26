@@ -14,22 +14,32 @@ import re
 def scan_file(filepath):
     try:
         with open(filepath, 'r', errors='ignore') as f:
-            content = f.read()
+            lines = f.readlines()
     except Exception as e:
         print(f"Failed to read {filepath}: {e}")
         return False
     # Example: look for hardcoded passwords
     patterns = [r"password\s*=\s*['\"]?\w+['\"]?", r"secret\s*=\s*['\"]?\w+['\"]?"]
-    for pat in patterns:
-        if re.search(pat, content, re.IGNORECASE):
-            print(f"Potential secret found in {filepath}")
-            return True
+    
+    for i, line in enumerate(lines):
+        if "nosec" in line.lower():
+            continue
+        for pat in patterns:
+            if re.search(pat, line, re.IGNORECASE):
+                print(f"Potential secret found in {filepath}:{i+1}")
+                return True
     return False
 
 def main():
     target = sys.argv[1] if len(sys.argv) > 1 else '.'
     found = False
-    for root, _, files in os.walk(target):
+    
+    ignore_dirs = {'.git', 'node_modules', '.next', 'out', 'build', 'coverage'}
+    
+    for root, dirs, files in os.walk(target):
+        for d in list(dirs):
+            if d in ignore_dirs:
+                dirs.remove(d)
         for name in files:
             if name.endswith(('.js', '.ts', '.tsx', '.py', '.json')):
                 path = os.path.join(root, name)

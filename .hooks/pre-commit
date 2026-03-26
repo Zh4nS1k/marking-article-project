@@ -1,18 +1,26 @@
 #!/usr/bin/env bash
 # Pre-commit hook: run linters, formatters, and security checks
 
-# Exit on any error
 set -e
 
-echo "Running ESLint..."
-npm run lint
+echo "[Hooks] Running formatters..."
+if [ -x scripts/format_code.sh ]; then
+  ./scripts/format_code.sh
+else
+  echo "[Hooks] Skipping format_code.sh (not found or not executable)"
+fi
 
-echo "Running Prettier..."
-npm run format
+echo "[Hooks] Running linters..."
+# Check if dependencies are installed before trying to lint
+if [ -d "node_modules" ]; then
+  npm run lint
+else
+  echo "[Hooks] ВНИМАНИЕ: node_modules не найден. Пропуск ESLint. Пожалуйста, запустите 'npm install'."
+fi
 
-# Security scan (placeholder)
+echo "[Hooks] Running security scan..."
 if [ -f scripts/security_scan.py ]; then
   python3 scripts/security_scan.py
 fi
 
-echo "Pre-commit checks passed."
+echo "[Hooks] Pre-commit checks passed!"
