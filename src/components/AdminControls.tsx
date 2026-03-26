@@ -97,8 +97,8 @@ export default function AdminControls() {
           <Upload className="w-5 h-5 text-blue-600" /> Bulk Import Articles
         </h3>
         <p className="text-sm text-slate-500 mb-6">
-          Upload a .xlsx, .xls, or .json file containing 'id' and 'content'
-          columns.
+          Upload a .xlsx, .xls, or .json file containing &apos;id&apos; and
+          &apos;content&apos; columns.
         </p>
 
         <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors relative overflow-hidden">
