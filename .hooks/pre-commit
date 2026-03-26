@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Pre-commit hook: run linters, formatters, and security checks
+
+# Exit on any error
+set -e
+
+echo "Running ESLint..."
+npm run lint
+
+echo "Running Prettier..."
+npm run format
+
+# Security scan (placeholder)
+if [ -f scripts/security_scan.py ]; then
+  python3 scripts/security_scan.py
+fi
+
+echo "Pre-commit checks passed."

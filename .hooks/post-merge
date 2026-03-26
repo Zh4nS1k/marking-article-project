@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Post-merge hook: update dependencies and run DB migrations
+
+set -e
+
+echo "Installing dependencies..."
+npm install
+
+echo "Running Prisma migrations..."
+npx prisma migrate deploy || npx prisma db push
+
+echo "Post-merge hook completed."

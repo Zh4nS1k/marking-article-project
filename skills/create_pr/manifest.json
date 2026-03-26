@@ -1,0 +1,9 @@
+{
+  "name": "create_pr",
+  "description": "Создает Pull Request с описанием, проверкой кода и авто-назначением ревьюверов.",
+  "parameters": {
+    "title": "Название PR (string)",
+    "base": "Ветка назначения, обычно main (string)",
+    "reviewers": "Список github-логинов ревьюверов через запятую (string)"
+  }
+}

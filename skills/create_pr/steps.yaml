@@ -1,0 +1,13 @@
+name: "create_pr"
+steps:
+  - name: "Run pre-commit checks"
+    action: "execute"
+    command: "./.hooks/pre-commit"
+  
+  - name: "Push current branch"
+    action: "execute"
+    command: "git push origin HEAD"
+    
+  - name: "Create PR via GitHub CLI"
+    action: "execute"
+    command: "gh pr create --title '{{title}}' --body 'Автоматический PR от ИИ-агента' --base '{{base}}' --reviewer '{{reviewers}}'"

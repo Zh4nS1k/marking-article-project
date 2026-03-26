@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Pre-push hook: run tests and type checking before pushing
+
+set -e
+
+echo "Running tests..."
+npm test || { echo "Tests failed"; exit 1; }
+
+echo "Running TypeScript type check..."
+npm run type-check || { echo "Type check failed"; exit 1; }
+
+echo "Pre-push checks passed."

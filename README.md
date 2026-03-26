@@ -2,6 +2,16 @@
 
 LegalAnnotator is a Next.js 14 application designed for reviewing, status-tracking, and annotating legal documents with ease and security.
 
+## Project Architecture (Reliable AI Engineering)
+Этот проект следует парадигме **надёжного ИИ-инжиниринга** (сдвиг ответственности максимально вниз по стеку от вероятностного языка агента к детерминированному коду):
+- **`.hooks/`**: Исполняемые скрипты для Git-событий (pre-commit, post-merge, pre-push).
+- **`scripts/`**: Детерминированная логика (Python, Bash) для форматирования, безопасности и валидации.
+- **`skills/`**: Модульные навыки (наборы действий) для автоматизации рабочих процессов ИИ (напр., `create_pr`).
+- **`prompts/`**: Заготовки и шаблоны промптов для уникальных задач.
+- **`tests/`**: Модульные тесты для скриптов инфраструктуры.
+
+Все компоненты связаны между собой и автоматизированы через `Makefile`.
+
 ## Features
 - **Next.js 14 App Router**: Modern and fast architecture.
 - **Tailwind CSS**: Responsive, beautiful UI.
