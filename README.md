@@ -41,4 +41,20 @@ LegalAnnotator is a Next.js 14 application designed for reviewing, status-tracki
    npm run dev
    ```
 
+## Production Deployment (Vercel)
+
+When deploying to Vercel, it's essential to configure the environment variables properly, especially regarding the PostgreSQL database connection to prevent exhausting your connection limits during serverless cold starts.
+
+1. **Environment Variables**:
+   In your Vercel project settings, explicitly add:
+   - `NEXTAUTH_SECRET`: A secure random 32+ character string (e.g. `openssl rand -base64 32`).
+   - `NEXTAUTH_URL`: Your actual deployed domain URL (e.g. `https://your-domain.vercel.app`).
+   - `DATABASE_URL`: Your pooled transaction connection string from your Postgres provider.
+
+2. **Connection Pooling**:
+   Serverless functions scale and spawn rapidly. When specifying your `DATABASE_URL` for Prisma in a serverless environment:
+   - Always map to the **Transaction Pooler** port (usually port 6543 on Supabase) rather than the direct Session connection (port 5432).
+   - Append `?pgbouncer=true` to handle the serverless lifecycle correctly.
+   - Example: `postgres://user:pass@pool-url.cloud.com:6543/db?pgbouncer=true&connection_limit=1`.
+
 Open [http://localhost:3000](http://localhost:3000) to view the application in your browser.

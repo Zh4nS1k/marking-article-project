@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { signOut, useSession } from 'next-auth/react';
-import Link from 'next/link';
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -11,7 +11,10 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+            <Link
+              href="/"
+              className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600"
+            >
               LegalAnnotator
             </Link>
           </div>
@@ -19,7 +22,9 @@ export default function Navbar() {
             {session ? (
               <>
                 <div className="hidden sm:flex items-center space-x-4">
-                  <span className="text-sm font-medium text-gray-700 bg-gray-100 px-3 py-1 rounded-full">{session.user?.email}</span>
+                  <span className="text-sm font-medium text-gray-700 bg-gray-100 px-3 py-1 rounded-full">
+                    {session.user?.email}
+                  </span>
                 </div>
                 <button
                   onClick={() => signOut()}

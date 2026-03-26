@@ -1,14 +1,15 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
-import Navbar from '@/components/Navbar';
-import AuthProvider from '@/components/AuthProvider';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import Navbar from "@/components/Navbar";
+import AuthProvider from "@/components/AuthProvider";
+import { Toaster } from "react-hot-toast";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'LegalAnnotator',
-  description: 'Legal document annotation tool',
+  title: "LegalAnnotator",
+  description: "Legal document annotation tool",
 };
 
 export default function RootLayout({
@@ -21,7 +22,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <Navbar />
-          <main className="min-h-screen bg-gray-50 text-gray-900">{children}</main>
+          <main className="min-h-screen bg-gray-50 text-gray-900">
+            {children}
+          </main>
+          <Toaster position="bottom-right" />
         </AuthProvider>
       </body>
     </html>

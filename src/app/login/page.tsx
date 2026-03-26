@@ -1,29 +1,29 @@
-'use client';
+"use client";
 
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@legalannotator.com');
-  const [password, setPassword] = useState('password123');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("admin@legalannotator.com");
+  const [password, setPassword] = useState("password123");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
-    const res = await signIn('credentials', {
+    const res = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
 
     if (res?.error) {
-      setError('Invalid email or password');
+      setError("Invalid email or password");
     } else {
-      router.push('/dashboard');
+      router.push("/dashboard");
       router.refresh();
     }
   };

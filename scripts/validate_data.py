@@ -11,10 +11,12 @@ Arguments:
 
 Exit code 0 on success, non-zero on validation errors.
 """
+
 import sys
 import json
 import importlib
 from pydantic import ValidationError
+
 
 def main():
     if len(sys.argv) != 3:
@@ -42,6 +44,7 @@ def main():
         print("Validation errors:")
         print(ve)
         sys.exit(4)
+
 
 if __name__ == "__main__":
     main()
