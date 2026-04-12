@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
@@ -18,7 +18,7 @@ enum ArticleStatus {
 }
 
 model User {
-  id          String       @id @default(cuid())
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
   email       String       @unique
   password    String
   role        Role         @default(USER)
@@ -26,18 +26,18 @@ model User {
 }
 
 model Article {
-  id          String        @id
-  content     String        @db.Text
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  content     String
   status      ArticleStatus @default(PENDING)
   annotations Annotation[]
 }
 
 model Annotation {
-  id        String   @id @default(cuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   question  String
   createdAt DateTime @default(now())
-  articleId String
-  userId    String
+  articleId String   @db.ObjectId
+  userId    String   @db.ObjectId
   article   Article  @relation(fields: [articleId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
 }

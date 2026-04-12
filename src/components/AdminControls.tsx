@@ -29,28 +29,42 @@ export default function AdminControls() {
 
           articles = json
             .map((row) => ({
-              id: row.id || row.ID || row.Id,
-              content:
+              id: String(row.external_id || row.id || row.ID || row.Id || ''),
+              content: String(
                 row.content ||
                 row.Content ||
                 row.CONTENT ||
                 row.text ||
-                row.Text,
+                row.Text || ''
+              ),
             }))
-            .filter((a) => a.id && a.content);
+            .filter((a) => a.id && a.content && a.id !== 'undefined');
         }
 
         if (articles.length === 0) {
           toast.error(
-            'No valid articles found. Ensure columns "id" and "content" exist.',
+            'No valid articles found. Ensure columns "external_id" and "content" exist.',
           );
           return;
         }
 
         startTransition(async () => {
-          const res = await uploadArticles(articles);
-          if (res.error) toast.error(res.error);
-          else toast.success(`Successfully uploaded ${res.count} articles!`);
+          try {
+            const batchSize = 50;
+            let totalCount = 0;
+            for (let i = 0; i < articles.length; i += batchSize) {
+              const batch = articles.slice(i, i + batchSize);
+              const res = await uploadArticles(batch);
+              if (res.error) {
+                toast.error(`Error in batch ${Math.floor(i / batchSize) + 1}: ${res.error}`);
+                return;
+              }
+              totalCount += res.count || 0;
+            }
+            toast.success(`Successfully uploaded ${totalCount} articles in batches!`);
+          } catch(e) {
+            toast.error('Upload process failed.');
+          }
         });
       } catch (err) {
         toast.error("Failed to parse file.");

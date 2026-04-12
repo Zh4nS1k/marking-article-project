@@ -72,11 +72,10 @@ export async function exportAnnotations() {
   });
 
   return annotations.map((a: any) => ({
-    annotationId: a.id,
-    question: a.question,
-    createdAt: a.createdAt,
-    articleId: a.article.id,
-    articleContent: a.article.content,
-    userEmail: a.user.email,
+    annotation_id: a.id,
+    article_id: a.article.id,
+    legal_text: a.article.content,
+    generated_question: a.question,
+    annotator_email: a.user.email
   }));
 }
